@@ -1,7 +1,0 @@
-/* Figma Design System Fonts */
-/* Inter Variable as figmaSans substitute (supports weights 100-900) */
-@import "@fontsource-variable/inter";
-
-/* JetBrains Mono as figmaMono substitute */
-@import "@fontsource/jetbrains-mono/400.css";
-@import "@fontsource/jetbrains-mono/700.css";
