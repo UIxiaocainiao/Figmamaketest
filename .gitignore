@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+.env
+.env.local
+.vite/
+__figma__entrypoint__.ts
+.mcp.json
+.projectrc
+pnpm-lock.yaml
