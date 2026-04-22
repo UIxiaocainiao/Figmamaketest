@@ -1,14 +1,14 @@
-// Figma Design System Toast Configuration
+// Starbucks Design System Toast Configuration
 export const bugattiToastStyle = {
   style: {
     background: "#ffffff",
-    border: "1px solid #000000",
+    border: "1px solid #00754A",
     color: "#000000",
     fontFamily: "'Inter Variable', 'SF Pro Display', sans-serif",
     fontSize: "14px",
-    fontWeight: 330,
-    letterSpacing: "-0.14px",
-    borderRadius: "8px",
+    fontWeight: 400,
+    letterSpacing: "-0.01em",
+    borderRadius: "12px",
   },
 };
 
@@ -19,8 +19,8 @@ export const bugattiToastError = {
     color: "#000000",
     fontFamily: "'Inter Variable', 'SF Pro Display', sans-serif",
     fontSize: "14px",
-    fontWeight: 330,
-    letterSpacing: "-0.14px",
-    borderRadius: "8px",
+    fontWeight: 400,
+    letterSpacing: "-0.01em",
+    borderRadius: "12px",
   },
 };
