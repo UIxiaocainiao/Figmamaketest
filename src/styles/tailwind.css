@@ -7,99 +7,230 @@
 
 @import "shadcn/tailwind.css";
 
+/* Figma Design System Fonts */
 @import "./fonts.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+    /* Figma Typography - Inter Variable as figmaSans substitute */
     --font-heading: 'Inter Variable', 'SF Pro Display', ui-sans-serif, system-ui, sans-serif;
+
     --font-sans: 'Inter Variable', 'SF Pro Display', ui-sans-serif, system-ui, sans-serif;
+
     --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+
     --color-sidebar-ring: var(--sidebar-ring);
+
     --color-sidebar-border: var(--sidebar-border);
+
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+
     --color-sidebar-accent: var(--sidebar-accent);
+
     --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+
     --color-sidebar-primary: var(--sidebar-primary);
+
     --color-sidebar-foreground: var(--sidebar-foreground);
+
     --color-sidebar: var(--sidebar);
+
     --color-chart-5: var(--chart-5);
+
     --color-chart-4: var(--chart-4);
+
     --color-chart-3: var(--chart-3);
+
     --color-chart-2: var(--chart-2);
+
     --color-chart-1: var(--chart-1);
+
     --color-ring: var(--ring);
+
     --color-input: var(--input);
+
     --color-border: var(--border);
+
     --color-destructive: var(--destructive);
+
     --color-accent-foreground: var(--accent-foreground);
+
     --color-accent: var(--accent);
+
     --color-muted-foreground: var(--muted-foreground);
+
     --color-muted: var(--muted);
+
     --color-secondary-foreground: var(--secondary-foreground);
+
     --color-secondary: var(--secondary);
+
     --color-primary-foreground: var(--primary-foreground);
+
     --color-primary: var(--primary);
+
     --color-popover-foreground: var(--popover-foreground);
+
     --color-popover: var(--popover);
+
     --color-card-foreground: var(--card-foreground);
+
     --color-card: var(--card);
+
     --color-foreground: var(--foreground);
+
     --color-background: var(--background);
+
     --radius-sm: calc(var(--radius) * 0.6);
+
     --radius-md: calc(var(--radius) * 0.8);
+
     --radius-lg: var(--radius);
+
     --radius-xl: calc(var(--radius) * 1.4);
+
     --radius-2xl: calc(var(--radius) * 1.8);
+
     --radius-3xl: calc(var(--radius) * 2.2);
+
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 :root {
-    --background: #f2f0eb;
-    --foreground: rgba(0, 0, 0, 0.87);
-    --card: #ffffff;
-    --card-foreground: rgba(0, 0, 0, 0.87);
+    /* Figma Design System - Pure Black & White Palette */
+    --background: #ffffff; /* Pure White - Figma's primary background */
+
+    --foreground: #000000; /* Pure Black - All interface text */
+
+    --card: #ffffff; /* Pure White cards */
+
+    --card-foreground: #000000; /* Black text on cards */
+
     --popover: #ffffff;
-    --popover-foreground: rgba(0, 0, 0, 0.87);
-    --primary: #00754A;
-    --primary-foreground: #ffffff;
-    --secondary: rgba(0, 0, 0, 0.08);
-    --secondary-foreground: rgba(0, 0, 0, 0.87);
-    --muted: rgba(0, 0, 0, 0.08);
-    --muted-foreground: rgba(0, 0, 0, 0.6);
+
+    --popover-foreground: #000000;
+
+    --primary: #000000; /* Black primary buttons */
+
+    --primary-foreground: #ffffff; /* White text on black buttons */
+
+    --secondary: rgba(0, 0, 0, 0.08); /* Glass Dark - subtle overlay */
+
+    --secondary-foreground: #000000;
+
+    --muted: rgba(0, 0, 0, 0.08); /* Glass Dark */
+
+    --muted-foreground: rgba(0, 0, 0, 0.6); /* Subtle black */
+
     --accent: rgba(0, 0, 0, 0.08);
-    --accent-foreground: rgba(0, 0, 0, 0.87);
-    --destructive: #000000;
-    --border: rgba(0, 0, 0, 0.1);
-    --input: rgba(0, 0, 0, 0.1);
-    --ring: #00754A;
-    --chart-1: #006241;
-    --chart-2: #00754A;
-    --chart-3: #2b5148;
-    --chart-4: #1E3932;
-    --chart-5: #d4e9e2;
-    --radius: 0.75rem;
+
+    --accent-foreground: #000000;
+
+    --destructive: #000000; /* Pure black - no color */
+
+    --border: rgba(0, 0, 0, 0.1); /* Subtle black border */
+
+    --input: rgba(0, 0, 0, 0.1); /* Subtle input border */
+
+    --ring: #000000; /* Black focus ring (will use dashed style) */
+
+    --chart-1: #000000;
+
+    --chart-2: #333333;
+
+    --chart-3: #666666;
+
+    --chart-4: #999999;
+
+    --chart-5: #cccccc;
+
+    --radius: 0.5rem; /* 8px - Figma's standard card radius */
+
     --sidebar: #ffffff;
-    --sidebar-foreground: rgba(0, 0, 0, 0.87);
-    --sidebar-primary: #00754A;
+
+    --sidebar-foreground: #000000;
+
+    --sidebar-primary: #000000;
+
     --sidebar-primary-foreground: #ffffff;
+
     --sidebar-accent: rgba(0, 0, 0, 0.08);
-    --sidebar-accent-foreground: rgba(0, 0, 0, 0.87);
+
+    --sidebar-accent-foreground: #000000;
+
     --sidebar-border: rgba(0, 0, 0, 0.1);
-    --sidebar-ring: #00754A;
-    --starbucks-green: #006241;
-    --green-accent: #00754A;
-    --house-green: #1E3932;
-    --green-uplift: #2b5148;
-    --green-light: #d4e9e2;
-    --gold: #cba258;
-    --gold-light: #dfc49d;
-    --gold-lightest: #faf6ee;
-    --neutral-warm: #f2f0eb;
-    --ceramic: #edebe9;
-    --neutral-cool: #f9f9f9;
-    --text-black: rgba(0, 0, 0, 0.87);
+
+    --sidebar-ring: #000000;
+
+    /* Figma Glass Effects */
+    --glass-dark: rgba(0, 0, 0, 0.08);
+    --glass-light: rgba(255, 255, 255, 0.16);
+}
+
+.dark {
+
+    --background: oklch(0.145 0 0);
+
+    --foreground: oklch(0.985 0 0);
+
+    --card: oklch(0.205 0 0);
+
+    --card-foreground: oklch(0.985 0 0);
+
+    --popover: oklch(0.205 0 0);
+
+    --popover-foreground: oklch(0.985 0 0);
+
+    --primary: oklch(0.922 0 0);
+
+    --primary-foreground: oklch(0.205 0 0);
+
+    --secondary: oklch(0.269 0 0);
+
+    --secondary-foreground: oklch(0.985 0 0);
+
+    --muted: oklch(0.269 0 0);
+
+    --muted-foreground: oklch(0.708 0 0);
+
+    --accent: oklch(0.269 0 0);
+
+    --accent-foreground: oklch(0.985 0 0);
+
+    --destructive: oklch(0.704 0.191 22.216);
+
+    --border: oklch(1 0 0 / 10%);
+
+    --input: oklch(1 0 0 / 15%);
+
+    --ring: oklch(0.556 0 0);
+
+    --chart-1: oklch(0.87 0 0);
+
+    --chart-2: oklch(0.556 0 0);
+
+    --chart-3: oklch(0.439 0 0);
+
+    --chart-4: oklch(0.371 0 0);
+
+    --chart-5: oklch(0.269 0 0);
+
+    --sidebar: oklch(0.205 0 0);
+
+    --sidebar-foreground: oklch(0.985 0 0);
+
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+
+    --sidebar-accent: oklch(0.269 0 0);
+
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+
+    --sidebar-border: oklch(1 0 0 / 10%);
+
+    --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -108,18 +239,23 @@
     outline-width: 2px;
     outline-color: var(--green-accent);
     outline-offset: 2px;
-  }
+    }
 
   body {
     @apply bg-background text-foreground;
+    /* Starbucks tight letter-spacing */
     letter-spacing: -0.16px;
     font-weight: 400;
-  }
+    }
 
-  html { @apply font-sans; }
+  html {
+    @apply font-sans;
+    }
 
+  /* Starbucks Design System - Typography */
   h1 {
     @apply uppercase;
+    /* Starbucks consistent tight letter-spacing */
     letter-spacing: -0.16px;
     font-weight: 400;
   }
@@ -128,14 +264,29 @@
     letter-spacing: -0.16px;
     font-weight: 400;
   }
+
+  /* Warm canvas background */
+  .dark {
+    @apply bg-background text-foreground;
+  }
 }
 
 @layer utilities {
-  .animate-fade-in { animation: fadeIn 0.5s ease-out; }
-  .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-  .animate-scale-in { animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  /* Starbucks Design System - Custom Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
 
-  .starbucks-pill, .figma-pill, .bugatti-pill {
+  .animate-slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Starbucks Pill Button - Green Accent */
+  .starbucks-pill {
     padding: 8px 18px 10px;
     background-color: #00754A;
     color: #ffffff;
@@ -144,9 +295,23 @@
     letter-spacing: -0.01em;
     transition: all 0.2s;
   }
-  .starbucks-pill:hover, .figma-pill:hover, .bugatti-pill:hover { opacity: 0.9; }
-  .starbucks-pill:active, .figma-pill:active, .bugatti-pill:active { transform: scale(0.95); }
 
+  .starbucks-pill:hover {
+    opacity: 0.9;
+  }
+
+  .starbucks-pill:active {
+    transform: scale(0.95);
+  }
+
+  .starbucks-pill:focus-visible {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: var(--green-accent);
+    outline-offset: 2px;
+  }
+
+  /* Starbucks White Pill - for dark surfaces */
   .starbucks-pill-white {
     padding: 8px 18px 10px;
     background-color: #ffffff;
@@ -156,9 +321,16 @@
     letter-spacing: -0.01em;
     transition: all 0.2s;
   }
-  .starbucks-pill-white:hover { opacity: 0.9; }
-  .starbucks-pill-white:active { transform: scale(0.95); }
 
+  .starbucks-pill-white:hover {
+    opacity: 0.9;
+  }
+
+  .starbucks-pill-white:active {
+    transform: scale(0.95);
+  }
+
+  /* Starbucks Frap - Floating CTA (56px circular) */
   .starbucks-frap {
     width: 56px;
     height: 56px;
@@ -168,41 +340,176 @@
     transition: all 0.2s;
     box-shadow: 0 0 6px rgba(0,0,0,0.24), 0 8px 12px rgba(0,0,0,0.14);
   }
-  .starbucks-frap:hover { box-shadow: 0 0 8px rgba(0,0,0,0.3), 0 12px 16px rgba(0,0,0,0.18); }
-  .starbucks-frap:active { transform: scale(0.95); }
 
-  .starbucks-card, .figma-card, .bugatti-card {
+  .starbucks-frap:hover {
+    box-shadow: 0 0 8px rgba(0,0,0,0.3), 0 12px 16px rgba(0,0,0,0.18);
+  }
+
+  .starbucks-frap:active {
+    transform: scale(0.95);
+  }
+
+  /* Starbucks Card - 12px rounded with whisper shadow */
+  .starbucks-card {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
     transition: all 0.3s;
   }
-  .starbucks-card:hover, .figma-card:hover, .bugatti-card:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24); }
 
-  .starbucks-mono-label, .figma-mono-label {
+  .starbucks-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+  }
+
+  /* Table Row Hover */
+  .table-row-hover {
+    transition: all 0.2s;
+  }
+
+  .table-row-hover:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  /* Starbucks Mono Label - uppercase with positive letter-spacing */
+  .starbucks-mono-label {
     font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: 0.54px;
     font-weight: 400;
   }
 
-  .starbucks-dark-surface { background-color: #1E3932; color: #ffffff; }
-  .starbucks-warm-surface { background-color: #f2f0eb; color: var(--text-black); }
-  .starbucks-ceramic-surface { background-color: #edebe9; color: var(--text-black); }
-  .starbucks-gold-accent { color: #cba258; }
-  .starbucks-gold-bg { background-color: #cba258; color: white; }
+  /* Dark Surface - House Green */
+  .starbucks-dark-surface {
+    background-color: #1E3932;
+    color: #ffffff;
+  }
+
+  /* Warm Surface - Neutral Warm */
+  .starbucks-warm-surface {
+    background-color: #f2f0eb;
+    color: var(--text-black);
+  }
+
+  /* Ceramic Surface */
+  .starbucks-ceramic-surface {
+    background-color: #edebe9;
+    color: var(--text-black);
+  }
+
+  /* Rewards Gold Accent */
+  .starbucks-gold-accent {
+    color: #cba258;
+  }
+
+  .starbucks-gold-bg {
+    background-color: #cba258;
+    color: white;
+  }
+
+  /* Legacy compatibility - map old classes to new ones */
+  .figma-pill {
+    padding: 8px 18px 10px;
+    background-color: #00754A;
+    color: #ffffff;
+    border-radius: 50px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    transition: all 0.2s;
+  }
+
+  .figma-pill:hover {
+    opacity: 0.9;
+  }
+
+  .figma-pill:active {
+    transform: scale(0.95);
+  }
+
+  .figma-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+    transition: all 0.3s;
+  }
+
+  .figma-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+  }
+
+  .figma-mono-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.54px;
+    font-weight: 400;
+  }
 
   .figma-glass-dark {
     border-radius: 9999px;
     background: rgba(0, 0, 0, 0.08);
     transition: all 0.2s;
   }
-  .figma-glass-dark:hover { background: rgba(0, 0, 0, 0.12); }
 
-  .table-row-hover { transition: all 0.2s; }
-  .table-row-hover:hover { background: rgba(0, 0, 0, 0.02); }
+  .figma-glass-dark:hover {
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  .bugatti-pill {
+    padding: 8px 18px 10px;
+    background-color: #00754A;
+    color: #ffffff;
+    border-radius: 50px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    transition: all 0.2s;
+  }
+
+  .bugatti-pill:hover {
+    opacity: 0.9;
+  }
+
+  .bugatti-pill:active {
+    transform: scale(0.95);
+  }
+
+  .bugatti-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+    transition: all 0.3s;
+  }
+
+  .bugatti-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+  }
 }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
