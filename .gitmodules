@@ -1,0 +1,4 @@
+[submodule "awesome-design-md"]
+	path = awesome-design-md
+	url = git@github.com:UIxiaocainiao/awesome-design-md.git
+	branch = main
