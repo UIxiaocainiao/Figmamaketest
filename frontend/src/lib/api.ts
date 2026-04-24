@@ -34,6 +34,42 @@ export interface DashboardPayload {
   lowStock: StockAlert[];
 }
 
+export interface InventoryRecord {
+  id: number;
+  sku: string;
+  name: string;
+  category: string;
+  quantity: number;
+  minimum: number;
+  unit: string;
+  price: number;
+  supplier: string;
+  location: string;
+}
+
+export interface SupplierRecord {
+  id: number;
+  name: string;
+  contact: string;
+  phone: string;
+  email: string;
+  address: string;
+  products: number;
+  totalPurchase: number;
+}
+
+export interface CustomerRecord {
+  id: number;
+  name: string;
+  contact: string;
+  phone: string;
+  email: string;
+  address: string;
+  orders: number;
+  totalSales: number;
+  level: "VIP" | "STANDARD";
+}
+
 function getApiBaseUrl() {
   return import.meta.env.VITE_API_BASE_URL?.trim() || "/api";
 }
@@ -60,4 +96,16 @@ export async function fetchBackendHealth(signal?: AbortSignal): Promise<BackendH
 
 export async function fetchDashboardData(signal?: AbortSignal): Promise<DashboardPayload> {
   return fetchJson<DashboardPayload>("/dashboard", signal);
+}
+
+export async function fetchInventoryData(signal?: AbortSignal): Promise<InventoryRecord[]> {
+  return fetchJson<InventoryRecord[]>("/inventory", signal);
+}
+
+export async function fetchSuppliersData(signal?: AbortSignal): Promise<SupplierRecord[]> {
+  return fetchJson<SupplierRecord[]>("/suppliers", signal);
+}
+
+export async function fetchCustomersData(signal?: AbortSignal): Promise<CustomerRecord[]> {
+  return fetchJson<CustomerRecord[]>("/customers", signal);
 }

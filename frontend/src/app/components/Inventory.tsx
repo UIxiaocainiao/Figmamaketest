@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, Plus, Edit, Trash2, X } from "lucide-react";
+import { Search, Plus, Edit, Trash2 } from "lucide-react";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,14 +9,17 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { toast, Toaster } from "sonner";
-import { bugattiToastStyle, bugattiToastError } from "@/lib/toast-config";
+import { bugattiToastError } from "@/lib/toast-config";
+import { fetchInventoryData, type InventoryRecord } from "@/lib/api";
 
 export function Inventory() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [products, setProducts] = useState<InventoryRecord[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [newProduct, setNewProduct] = useState({
     name: "",
     sku: "",
@@ -30,63 +33,27 @@ export function Inventory() {
   // Keyboard shortcut: Ctrl/Cmd + K to open add product dialog
   useKeyboardShortcut("k", () => setIsAddDialogOpen(true), { ctrl: true });
 
-  const products = [
-    {
-      id: 1,
-      sku: "SKU-001",
-      name: "Laptop Computer",
-      category: "ELECTRONICS",
-      quantity: 45,
-      unit: "PCS",
-      price: "5,999.00",
-      supplier: "Supplier A",
-      location: "WAREHOUSE A-01",
-    },
-    {
-      id: 2,
-      sku: "SKU-002",
-      name: "Wireless Mouse",
-      category: "ACCESSORIES",
-      quantity: 156,
-      unit: "PCS",
-      price: "89.00",
-      supplier: "Supplier B",
-      location: "WAREHOUSE A-02",
-    },
-    {
-      id: 3,
-      sku: "SKU-003",
-      name: "Mechanical Keyboard",
-      category: "ACCESSORIES",
-      quantity: 78,
-      unit: "PCS",
-      price: "399.00",
-      supplier: "Supplier A",
-      location: "WAREHOUSE A-03",
-    },
-    {
-      id: 4,
-      sku: "SKU-004",
-      name: "27-inch Monitor",
-      category: "ELECTRONICS",
-      quantity: 32,
-      unit: "PCS",
-      price: "1,899.00",
-      supplier: "Supplier C",
-      location: "WAREHOUSE B-01",
-    },
-    {
-      id: 5,
-      sku: "SKU-005",
-      name: "USB-C Cable",
-      category: "ACCESSORIES",
-      quantity: 245,
-      unit: "PCS",
-      price: "29.00",
-      supplier: "Supplier B",
-      location: "WAREHOUSE A-04",
-    },
-  ];
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetchInventoryData(controller.signal)
+      .then((data) => {
+        setProducts(data);
+        setIsLoading(false);
+        setError(null);
+      })
+      .catch((fetchError) => {
+        if (controller.signal.aborted) {
+          return;
+        }
+
+        setProducts([]);
+        setIsLoading(false);
+        setError(fetchError instanceof Error ? fetchError.message : "Failed to load inventory");
+      });
+
+    return () => controller.abort();
+  }, []);
 
   const filteredProducts = products.filter(
     (product) =>
@@ -94,11 +61,18 @@ export function Inventory() {
       product.sku.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat("zh-CN", {
+      style: "currency",
+      currency: "CNY",
+      maximumFractionDigits: 2,
+    }).format(value);
+
   const handleAddProduct = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Product added successfully", {
-      description: `${newProduct.name} has been added to inventory`,
-      ...bugattiToastStyle,
+    toast.error("Read-only inventory demo", {
+      description: `${newProduct.name} was not saved because create endpoints are not implemented yet`,
+      ...bugattiToastError,
     });
     setIsAddDialogOpen(false);
     setNewProduct({
@@ -113,8 +87,8 @@ export function Inventory() {
   };
 
   const handleDeleteProduct = (productName: string) => {
-    toast.error("Product deleted", {
-      description: `${productName} has been removed from inventory`,
+    toast.error("Delete endpoint not implemented", {
+      description: `${productName} was not removed because this page is currently read-only`,
       ...bugattiToastError,
     });
   };
@@ -168,34 +142,58 @@ export function Inventory() {
               </tr>
             </thead>
             <tbody>
-              {filteredProducts.map((product) => (
-                <tr key={product.id} className="border-b border-black/10 table-row-hover">
-                  <td className="px-4 py-4 text-sm font-mono text-black" style={{ fontWeight: 400 }}>{product.sku}</td>
-                  <td className="px-4 py-4 text-sm text-black" style={{ fontWeight: 480, letterSpacing: '-0.14px' }}>{product.name}</td>
-                  <td className="px-4 py-4 figma-mono-label text-xs text-black/60">{product.category}</td>
-                  <td className="px-4 py-4 text-sm font-sans" style={{ fontWeight: 330, letterSpacing: '-0.1px' }}>
-                    <span className={product.quantity < 50 ? "text-black" : "text-black"} style={{ fontWeight: product.quantity < 50 ? 540 : 330 }}>
-                      {product.quantity} {product.unit}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4 text-sm font-sans text-black" style={{ fontWeight: 480, letterSpacing: '-0.14px' }}>¥{product.price}</td>
-                  <td className="px-4 py-4 text-xs text-black/60" style={{ fontWeight: 330, letterSpacing: '-0.1px' }}>{product.supplier}</td>
-                  <td className="px-4 py-4 figma-mono-label text-xs text-black/60">{product.location}</td>
-                  <td className="px-4 py-4">
-                    <div className="flex gap-2">
-                      <button className="p-2 text-black hover:bg-black/5 rounded-full transition-colors figma-glass-dark">
-                        <Edit className="size-4" />
-                      </button>
-                      <button
-                        className="p-2 text-black hover:bg-black/5 rounded-full transition-colors figma-glass-dark"
-                        onClick={() => handleDeleteProduct(product.name)}
-                      >
-                        <Trash2 className="size-4" />
-                      </button>
-                    </div>
+              {isLoading ? (
+                Array.from({ length: 5 }).map((_, index) => (
+                  <tr key={index} className="border-b border-black/10">
+                    <td colSpan={8} className="px-4 py-4">
+                      <div className="h-8 rounded bg-black/5 animate-pulse" />
+                    </td>
+                  </tr>
+                ))
+              ) : error ? (
+                <tr>
+                  <td colSpan={8} className="px-4 py-8 text-center text-sm text-black/60">
+                    {error}
                   </td>
                 </tr>
-              ))}
+              ) : filteredProducts.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="px-4 py-8 text-center text-sm text-black/60">
+                    No inventory items match the current search.
+                  </td>
+                </tr>
+              ) : (
+                filteredProducts.map((product) => (
+                  <tr key={product.id} className="border-b border-black/10 table-row-hover">
+                    <td className="px-4 py-4 text-sm font-mono text-black" style={{ fontWeight: 400 }}>{product.sku}</td>
+                    <td className="px-4 py-4 text-sm text-black" style={{ fontWeight: 480, letterSpacing: '-0.14px' }}>{product.name}</td>
+                    <td className="px-4 py-4 figma-mono-label text-xs text-black/60">{product.category}</td>
+                    <td className="px-4 py-4 text-sm font-sans" style={{ fontWeight: 330, letterSpacing: '-0.1px' }}>
+                      <span className="text-black" style={{ fontWeight: product.quantity <= product.minimum ? 540 : 330 }}>
+                        {product.quantity} {product.unit}
+                      </span>
+                    </td>
+                    <td className="px-4 py-4 text-sm font-sans text-black" style={{ fontWeight: 480, letterSpacing: '-0.14px' }}>
+                      {formatCurrency(product.price)}
+                    </td>
+                    <td className="px-4 py-4 text-xs text-black/60" style={{ fontWeight: 330, letterSpacing: '-0.1px' }}>{product.supplier}</td>
+                    <td className="px-4 py-4 figma-mono-label text-xs text-black/60">{product.location}</td>
+                    <td className="px-4 py-4">
+                      <div className="flex gap-2">
+                        <button className="p-2 text-black hover:bg-black/5 rounded-full transition-colors figma-glass-dark">
+                          <Edit className="size-4" />
+                        </button>
+                        <button
+                          className="p-2 text-black hover:bg-black/5 rounded-full transition-colors figma-glass-dark"
+                          onClick={() => handleDeleteProduct(product.name)}
+                        >
+                          <Trash2 className="size-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
@@ -300,7 +298,7 @@ export function Inventory() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label className="text-xs font-mono tracking-[1.4px] uppercase text-white">
+              <Label className="figma-mono-label text-xs text-black">
                 WAREHOUSE LOCATION <span className="text-black/40">*</span>
               </Label>
               <Input
@@ -308,7 +306,8 @@ export function Inventory() {
                 value={newProduct.location}
                 onChange={(e) => setNewProduct({ ...newProduct, location: e.target.value })}
                 required
-                className="bg-transparent border-[#999999] text-white font-mono focus:border-white"
+                className="bg-white border-black/10 text-black font-sans focus:border-black"
+                style={{ fontWeight: 330, letterSpacing: "-0.14px" }}
               />
             </div>
 

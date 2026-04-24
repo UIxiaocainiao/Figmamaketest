@@ -1,4 +1,5 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
+import { getCustomerSummaries, getInventoryRecords, getSupplierSummaries } from "./data.js";
 import { getDashboardPayload } from "./dashboard.js";
 
 export interface ServerConfig {
@@ -32,7 +33,14 @@ function handleRequest(config: ServerConfig, request: IncomingMessage, response:
   if (method === "GET" && url.pathname === "/api") {
     sendJson(response, 200, {
       service: "backend",
-      endpoints: ["/api", "/api/health", "/api/dashboard"],
+      endpoints: [
+        "/api",
+        "/api/health",
+        "/api/dashboard",
+        "/api/inventory",
+        "/api/suppliers",
+        "/api/customers",
+      ],
     });
     return;
   }
@@ -48,6 +56,21 @@ function handleRequest(config: ServerConfig, request: IncomingMessage, response:
 
   if (method === "GET" && url.pathname === "/api/dashboard") {
     sendJson(response, 200, getDashboardPayload());
+    return;
+  }
+
+  if (method === "GET" && url.pathname === "/api/inventory") {
+    sendJson(response, 200, getInventoryRecords());
+    return;
+  }
+
+  if (method === "GET" && url.pathname === "/api/suppliers") {
+    sendJson(response, 200, getSupplierSummaries());
+    return;
+  }
+
+  if (method === "GET" && url.pathname === "/api/customers") {
+    sendJson(response, 200, getCustomerSummaries());
     return;
   }
 
