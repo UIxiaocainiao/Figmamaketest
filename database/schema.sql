@@ -1,0 +1,57 @@
+CREATE TABLE IF NOT EXISTS customers (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  phone VARCHAR(50),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS suppliers (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  contact_name VARCHAR(120),
+  email VARCHAR(255),
+  phone VARCHAR(50),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS inventory_items (
+  id SERIAL PRIMARY KEY,
+  sku VARCHAR(64) UNIQUE NOT NULL,
+  name VARCHAR(160) NOT NULL,
+  description TEXT,
+  supplier_id INTEGER REFERENCES suppliers(id),
+  quantity INTEGER NOT NULL DEFAULT 0,
+  unit_price NUMERIC(12, 2) NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS purchases (
+  id SERIAL PRIMARY KEY,
+  supplier_id INTEGER NOT NULL REFERENCES suppliers(id),
+  total_amount NUMERIC(12, 2) NOT NULL DEFAULT 0,
+  ordered_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS purchase_items (
+  id SERIAL PRIMARY KEY,
+  purchase_id INTEGER NOT NULL REFERENCES purchases(id) ON DELETE CASCADE,
+  inventory_item_id INTEGER NOT NULL REFERENCES inventory_items(id),
+  quantity INTEGER NOT NULL,
+  unit_cost NUMERIC(12, 2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sales (
+  id SERIAL PRIMARY KEY,
+  customer_id INTEGER REFERENCES customers(id),
+  total_amount NUMERIC(12, 2) NOT NULL DEFAULT 0,
+  sold_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS sale_items (
+  id SERIAL PRIMARY KEY,
+  sale_id INTEGER NOT NULL REFERENCES sales(id) ON DELETE CASCADE,
+  inventory_item_id INTEGER NOT NULL REFERENCES inventory_items(id),
+  quantity INTEGER NOT NULL,
+  unit_price NUMERIC(12, 2) NOT NULL
+);
