@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "dev": "pnpm --parallel --filter @figmamaketest/backend --filter @figmamaketest/frontend run dev",
+    "build": "pnpm --filter @figmamaketest/backend build && pnpm --filter @figmamaketest/frontend build",
     "dev:frontend": "pnpm --filter @figmamaketest/frontend dev",
     "build:frontend": "pnpm --filter @figmamaketest/frontend build",
     "preview:frontend": "pnpm --filter @figmamaketest/frontend preview",

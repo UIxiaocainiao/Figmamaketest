@@ -1,9 +1,11 @@
 import { Package, ShoppingCart, TrendingUp, AlertTriangle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { QuickStats } from "./QuickStats";
+import { useBackendHealth } from "@/hooks/useBackendHealth";
 
 export function Dashboard() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { data: backendHealth, isLoading: isHealthLoading, error: healthError } = useBackendHealth();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -68,6 +70,45 @@ export function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="border border-black/10 rounded-lg bg-white figma-card lg:col-span-2">
+          <div className="p-6 border-b border-black/10 flex items-center justify-between gap-4">
+            <h2 className="figma-mono-label text-lg text-black">SYSTEM STATUS</h2>
+            <span className="figma-mono-label text-xs text-black/60">
+              {isHealthLoading ? "CHECKING BACKEND" : "LIVE CONNECTION"}
+            </span>
+          </div>
+          <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 border border-black/10 rounded-md">
+              <p className="figma-mono-label text-xs text-black/60 mb-2">BACKEND</p>
+              <p className="font-sans text-sm text-black" style={{ fontWeight: 540, letterSpacing: "-0.14px" }}>
+                {isHealthLoading ? "CHECKING" : healthError ? "OFFLINE" : "ONLINE"}
+              </p>
+            </div>
+            <div className="p-4 border border-black/10 rounded-md">
+              <p className="figma-mono-label text-xs text-black/60 mb-2">DATABASE CONFIG</p>
+              <p className="font-sans text-sm text-black" style={{ fontWeight: 540, letterSpacing: "-0.14px" }}>
+                {backendHealth?.databaseConfigured ? "CONFIGURED" : "NOT CONFIGURED"}
+              </p>
+            </div>
+            <div className="p-4 border border-black/10 rounded-md">
+              <p className="figma-mono-label text-xs text-black/60 mb-2">LAST RESPONSE</p>
+              <p className="font-sans text-sm text-black" style={{ fontWeight: 540, letterSpacing: "-0.14px" }}>
+                {backendHealth ? new Date(backendHealth.timestamp).toLocaleString() : "NO DATA"}
+              </p>
+            </div>
+          </div>
+          {healthError ? (
+            <div className="px-6 pb-6">
+              <div className="p-4 border border-black/20 rounded-md">
+                <p className="figma-mono-label text-xs text-black/60 mb-2">ERROR</p>
+                <p className="text-sm text-black/70" style={{ fontWeight: 330, letterSpacing: "-0.1px" }}>
+                  {healthError}
+                </p>
+              </div>
+            </div>
+          ) : null}
+        </div>
+
         {/* Recent Orders */}
         <div className="border border-black/10 rounded-lg bg-white figma-card">
           <div className="p-6 border-b border-black/10">
