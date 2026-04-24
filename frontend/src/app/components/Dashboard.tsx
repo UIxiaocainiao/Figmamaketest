@@ -2,53 +2,35 @@ import { Package, ShoppingCart, TrendingUp, AlertTriangle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { QuickStats } from "./QuickStats";
 import { useBackendHealth } from "@/hooks/useBackendHealth";
+import { useDashboardData } from "@/hooks/useDashboardData";
+import type { DashboardStat } from "@/lib/api";
+
+const statIcons: Record<DashboardStat["type"], typeof Package> = {
+  inventory: Package,
+  purchase: ShoppingCart,
+  sales: TrendingUp,
+  alerts: AlertTriangle,
+};
+
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat("zh-CN", {
+    style: "currency",
+    currency: "CNY",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
 
 export function Dashboard() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { data: backendHealth, isLoading: isHealthLoading, error: healthError } = useBackendHealth();
+  const { data: dashboardData, isLoading: isDashboardLoading, error: dashboardError } = useDashboardData();
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-  const stats = [
-    {
-      title: "TOTAL INVENTORY",
-      value: "¥1,234,567",
-      change: "+12.5%",
-      icon: Package,
-    },
-    {
-      title: "MONTHLY PURCHASE",
-      value: "¥456,789",
-      change: "+8.2%",
-      icon: ShoppingCart,
-    },
-    {
-      title: "MONTHLY SALES",
-      value: "¥892,345",
-      change: "+15.3%",
-      icon: TrendingUp,
-    },
-    {
-      title: "STOCK ALERTS",
-      value: "23",
-      change: "RESTOCK",
-      icon: AlertTriangle,
-    },
-  ];
-
-  const recentOrders = [
-    { id: "PO-001", type: "PURCHASE", supplier: "Supplier A", amount: "¥12,500", status: "COMPLETED" },
-    { id: "SO-102", type: "SALES", customer: "Customer B", amount: "¥8,900", status: "PROCESSING" },
-    { id: "PO-002", type: "PURCHASE", supplier: "Supplier C", amount: "¥25,000", status: "PENDING" },
-    { id: "SO-103", type: "SALES", customer: "Customer D", amount: "¥15,600", status: "COMPLETED" },
-  ];
-
-  const lowStock = [
-    { name: "Product A", sku: "SKU-001", current: 15, minimum: 50, unit: "PCS" },
-    { name: "Product B", sku: "SKU-002", current: 8, minimum: 30, unit: "BOX" },
-    { name: "Product C", sku: "SKU-003", current: 22, minimum: 100, unit: "PCS" },
-  ];
+  const stats = dashboardData?.stats ?? [];
+  const recentOrders = dashboardData?.recentOrders ?? [];
+  const lowStock = dashboardData?.lowStock ?? [];
 
   return (
     <div className={isLoaded ? "animate-fade-in" : "opacity-0"}>
@@ -58,15 +40,23 @@ export function Dashboard() {
 
       {/* Stats Grid - Figma Style Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-        {stats.map((stat) => (
-          <QuickStats
-            key={stat.title}
-            label={stat.title}
-            value={stat.value}
-            change={stat.change}
-            icon={stat.icon}
-          />
-        ))}
+        {isDashboardLoading
+          ? Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="figma-card p-6 animate-pulse">
+                <div className="h-6 w-6 rounded bg-black/10 mb-6" />
+                <div className="h-3 w-24 rounded bg-black/10 mb-3" />
+                <div className="h-8 w-32 rounded bg-black/10" />
+              </div>
+            ))
+          : stats.map((stat) => (
+              <QuickStats
+                key={stat.title}
+                label={stat.title}
+                value={stat.type === "alerts" ? stat.value : formatCurrency(stat.value)}
+                change={stat.change}
+                icon={statIcons[stat.type]}
+              />
+            ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -107,6 +97,16 @@ export function Dashboard() {
               </div>
             </div>
           ) : null}
+          {dashboardError ? (
+            <div className="px-6 pb-6">
+              <div className="p-4 border border-black/20 rounded-md">
+                <p className="figma-mono-label text-xs text-black/60 mb-2">DASHBOARD DATA</p>
+                <p className="text-sm text-black/70" style={{ fontWeight: 330, letterSpacing: "-0.1px" }}>
+                  {dashboardError}
+                </p>
+              </div>
+            </div>
+          ) : null}
         </div>
 
         {/* Recent Orders */}
@@ -121,17 +121,22 @@ export function Dashboard() {
                   <div>
                     <p className="font-mono text-sm text-black" style={{ fontWeight: 400 }}>{order.id}</p>
                     <p className="text-xs font-sans text-black/60 mt-1" style={{ fontWeight: 330, letterSpacing: '-0.1px' }}>
-                      {order.type} - {order.supplier || order.customer}
+                      {order.type} - {order.counterparty}
                     </p>
                   </div>
                   <div className="text-right flex flex-col gap-2">
-                    <p className="font-sans text-sm text-black" style={{ fontWeight: 480, letterSpacing: '-0.14px' }}>{order.amount}</p>
+                    <p className="font-sans text-sm text-black" style={{ fontWeight: 480, letterSpacing: '-0.14px' }}>{formatCurrency(order.amount)}</p>
                     <span className="figma-mono-label text-xs text-black/60">
                       {order.status}
                     </span>
                   </div>
                 </div>
               ))}
+              {!isDashboardLoading && recentOrders.length === 0 ? (
+                <div className="p-4 border border-dashed border-black/10 rounded-md">
+                  <p className="figma-mono-label text-xs text-black/60">NO ORDERS AVAILABLE</p>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -161,6 +166,11 @@ export function Dashboard() {
                   </div>
                 </div>
               ))}
+              {!isDashboardLoading && lowStock.length === 0 ? (
+                <div className="p-4 border border-dashed border-black/10 rounded-md">
+                  <p className="figma-mono-label text-xs text-black/60">NO STOCK ALERTS</p>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

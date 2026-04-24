@@ -1,4 +1,5 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
+import { getDashboardPayload } from "./dashboard.js";
 
 export interface ServerConfig {
   databaseUrl?: string;
@@ -31,7 +32,7 @@ function handleRequest(config: ServerConfig, request: IncomingMessage, response:
   if (method === "GET" && url.pathname === "/api") {
     sendJson(response, 200, {
       service: "backend",
-      endpoints: ["/api", "/api/health"],
+      endpoints: ["/api", "/api/health", "/api/dashboard"],
     });
     return;
   }
@@ -42,6 +43,11 @@ function handleRequest(config: ServerConfig, request: IncomingMessage, response:
       databaseConfigured: Boolean(config.databaseUrl),
       timestamp: new Date().toISOString(),
     });
+    return;
+  }
+
+  if (method === "GET" && url.pathname === "/api/dashboard") {
+    sendJson(response, 200, getDashboardPayload());
     return;
   }
 
