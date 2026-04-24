@@ -2,3 +2,7 @@
 	path = awesome-design-md
 	url = git@github.com:UIxiaocainiao/awesome-design-md.git
 	branch = main
+[submodule "design.md"]
+	path = design.md
+	url = git@github.com:UIxiaocainiao/design.md.git
+	branch = main
