@@ -367,7 +367,7 @@
   }
 
   .table-row-hover:hover {
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   /* Starbucks Mono Label - uppercase with positive letter-spacing */
@@ -406,34 +406,40 @@
     color: white;
   }
 
-  /* Legacy compatibility - map old classes to new ones */
+  /* Legacy compatibility - map old classes to atmospheric glass */
   .figma-pill {
     padding: 8px 18px 10px;
-    background-color: #00754A;
-    color: #ffffff;
-    border-radius: 50px;
-    font-weight: 400;
+    background-color: #ffffff;
+    color: #2f3131;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 500;
     letter-spacing: -0.01em;
     transition: all 0.2s;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   }
 
   .figma-pill:hover {
-    opacity: 0.9;
+    background-color: #e2e2e2;
   }
 
   .figma-pill:active {
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
 
   .figma-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     transition: all 0.3s;
   }
 
   .figma-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+    background-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.16);
   }
 
   .figma-mono-label {
@@ -445,12 +451,14 @@
 
   .figma-glass-dark {
     border-radius: 9999px;
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     transition: all 0.2s;
   }
 
   .figma-glass-dark:hover {
-    background: rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.16);
   }
 
   .bugatti-pill {

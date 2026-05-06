@@ -19,7 +19,7 @@ export function Reports() {
   return (
     <div className="animate-fade-in">
       <div className="flex justify-between items-center mb-12">
-        <h1 className="text-6xl font-heading tracking-tight uppercase text-black leading-none animate-slide-up" style={{ fontWeight: 400 }}>
+        <h1 className="text-6xl font-heading tracking-tight uppercase text-white leading-none animate-slide-up" style={{ fontWeight: 400 }}>
           REPORTS
         </h1>
         <Button className="figma-pill">
@@ -30,7 +30,7 @@ export function Reports() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-        <div className="bg-gradient-to-br from-black/10 to-black/5 border border-black/20 rounded-md p-8 text-black">
+        <div className="bg-gradient-to-br from-white/20 to-white/8 border border-white/25 rounded-md p-8 text-white">
           <div className="flex items-center justify-between mb-6">
             <BarChart3 className="size-8" />
             <TrendingUp className="size-6" />
@@ -38,7 +38,7 @@ export function Reports() {
           <h3 className="text-xs figma-mono-label mb-2 uppercase opacity-75">MONTHLY PURCHASE</h3>
           <p className="text-4xl font-heading" style={{ fontWeight: 540 }}>¥456,789</p>
         </div>
-        <div className="bg-gradient-to-br from-black/10 to-black/5 border border-black/20 rounded-md p-8 text-black">
+        <div className="bg-gradient-to-br from-white/20 to-white/8 border border-white/25 rounded-md p-8 text-white">
           <div className="flex items-center justify-between mb-6">
             <BarChart3 className="size-8" />
             <TrendingUp className="size-6" />
@@ -46,7 +46,7 @@ export function Reports() {
           <h3 className="text-xs figma-mono-label mb-2 uppercase opacity-75">MONTHLY SALES</h3>
           <p className="text-4xl font-heading" style={{ fontWeight: 540 }}>¥892,345</p>
         </div>
-        <div className="bg-gradient-to-br from-black/10 to-black/5 border border-black/20 rounded-md p-8 text-black">
+        <div className="bg-gradient-to-br from-white/20 to-white/8 border border-white/25 rounded-md p-8 text-white">
           <div className="flex items-center justify-between mb-6">
             <BarChart3 className="size-8" />
             <TrendingUp className="size-6" />
@@ -58,30 +58,30 @@ export function Reports() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Monthly Trend */}
-        <div className="border border-black/10 rounded-md">
-          <div className="p-6 border-b border-black/10">
-            <h2 className="text-xl figma-mono-label uppercase text-black">MONTHLY TREND</h2>
+        <div className="figma-card overflow-hidden border border-white/20 rounded-xl">
+          <div className="p-6 border-b border-white/20">
+            <h2 className="text-xl figma-mono-label uppercase text-white">MONTHLY TREND</h2>
           </div>
           <div className="p-6">
             <div className="flex flex-col gap-6">
               {monthlyData.map((data) => (
                 <div key={data.month} className="flex flex-col gap-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-mono font-medium text-black tracking-wider">{data.month}</span>
-                    <span className="text-xs font-mono text-black/60">
+                    <span className="text-sm font-mono font-medium text-white tracking-wider">{data.month}</span>
+                    <span className="text-xs font-mono text-[#c4c7c8]">
                       PROFIT: ¥{data.profit.toLocaleString()}
                     </span>
                   </div>
-                  <div className="relative h-8 bg-black/5 rounded-full overflow-hidden border border-black/10">
+                  <div className="relative h-8 bg-white/10 rounded-full overflow-hidden border border-white/20">
                     <div
-                      className="absolute top-0 left-0 h-full bg-gradient-to-r from-black/40 to-black/20"
+                      className="absolute top-0 left-0 h-full bg-gradient-to-r from-white/40 to-white/20"
                       style={{ width: `${(data.sales / 1000000) * 100}%` }}
                     ></div>
                     <div className="absolute inset-0 flex items-center justify-between px-4">
-                      <span className="text-xs font-mono text-black/60">
+                      <span className="text-xs font-mono text-[#c4c7c8]">
                         P: ¥{(data.purchase / 1000).toFixed(0)}K
                       </span>
-                      <span className="text-xs font-mono text-black font-medium">
+                      <span className="text-xs font-mono text-white font-medium">
                         S: ¥{(data.sales / 1000).toFixed(0)}K
                       </span>
                     </div>
@@ -93,24 +93,24 @@ export function Reports() {
         </div>
 
         {/* Top Products */}
-        <div className="border border-black/10 rounded-md">
-          <div className="p-6 border-b border-black/10">
-            <h2 className="text-xl figma-mono-label uppercase text-black">TOP PRODUCTS</h2>
+        <div className="figma-card overflow-hidden border border-white/20 rounded-xl">
+          <div className="p-6 border-b border-white/20">
+            <h2 className="text-xl figma-mono-label uppercase text-white">TOP PRODUCTS</h2>
           </div>
           <div className="p-6">
             <div className="flex flex-col gap-4">
               {topProducts.map((product, index) => (
-                <div key={product.name} className="flex items-center gap-4 p-4 border border-black/10 rounded-md">
-                  <div className="flex-shrink-0 size-8 bg-black text-white rounded-full flex items-center justify-center font-mono font-bold text-sm">
+                <div key={product.name} className="flex items-center gap-4 p-4 border border-white/20 rounded-md">
+                  <div className="flex-shrink-0 size-8 bg-white text-[#2f3131] rounded-full flex items-center justify-center font-mono font-bold text-sm">
                     {index + 1}
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-black" style={{ letterSpacing: '-0.14px', fontWeight: 330 }}>{product.name}</p>
-                    <p className="text-xs font-mono text-black/60 mt-1">QTY: {product.quantity} PCS</p>
+                    <p className="font-medium text-white" style={{ letterSpacing: '-0.14px', fontWeight: 330 }}>{product.name}</p>
+                    <p className="text-xs font-mono text-[#c4c7c8] mt-1">QTY: {product.quantity} PCS</p>
                   </div>
                   <div className="text-right flex flex-col gap-1">
-                    <p className="font-mono text-sm text-black font-semibold">{product.sales}</p>
-                    <span className="text-xs font-mono text-black">{product.growth}</span>
+                    <p className="font-mono text-sm text-white font-semibold">{product.sales}</p>
+                    <span className="text-xs font-mono text-white">{product.growth}</span>
                   </div>
                 </div>
               ))}

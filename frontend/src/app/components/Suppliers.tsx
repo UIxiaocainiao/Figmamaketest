@@ -40,7 +40,7 @@ export function Suppliers() {
   return (
     <div className="animate-fade-in">
       <div className="flex justify-between items-center mb-12">
-        <h1 className="text-6xl font-heading tracking-tight uppercase text-black leading-none animate-slide-up" style={{ fontWeight: 400 }}>
+        <h1 className="text-6xl font-heading tracking-tight uppercase text-white leading-none animate-slide-up" style={{ fontWeight: 400 }}>
           SUPPLIERS
         </h1>
         <Button className="figma-pill">
@@ -54,16 +54,16 @@ export function Suppliers() {
         {isLoading
           ? Array.from({ length: 4 }).map((_, index) => (
               <div key={index} className="figma-card p-6 animate-pulse">
-                <div className="h-6 w-40 rounded bg-black/10 mb-4" />
-                <div className="h-4 w-24 rounded bg-black/10 mb-6" />
+                <div className="h-6 w-40 rounded bg-white/15 mb-4" />
+                <div className="h-4 w-24 rounded bg-white/15 mb-6" />
                 <div className="space-y-3 mb-6">
-                  <div className="h-4 rounded bg-black/10" />
-                  <div className="h-4 rounded bg-black/10" />
-                  <div className="h-12 rounded bg-black/10" />
+                  <div className="h-4 rounded bg-white/15" />
+                  <div className="h-4 rounded bg-white/15" />
+                  <div className="h-12 rounded bg-white/15" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="h-10 rounded bg-black/10" />
-                  <div className="h-10 rounded bg-black/10" />
+                  <div className="h-10 rounded bg-white/15" />
+                  <div className="h-10 rounded bg-white/15" />
                 </div>
               </div>
             ))
@@ -71,37 +71,37 @@ export function Suppliers() {
               <div key={supplier.id} className="figma-card p-6">
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <h3 className="text-xl font-heading text-black tracking-tight mb-2" style={{ fontWeight: 540 }}>{supplier.name}</h3>
-                    <p className="text-xs font-mono text-black/60 tracking-wider">CONTACT: {supplier.contact}</p>
+                    <h3 className="text-xl font-heading text-white tracking-tight mb-2" style={{ fontWeight: 540 }}>{supplier.name}</h3>
+                    <p className="text-xs font-mono text-[#c4c7c8] tracking-wider">CONTACT: {supplier.contact}</p>
                   </div>
-                  <button className="p-2 text-black hover:bg-black/10 rounded-md transition-colors">
+                  <button className="p-2 text-white hover:bg-white/15 rounded-md transition-colors">
                     <Edit className="size-4" />
                   </button>
                 </div>
 
                 <div className="flex flex-col gap-3 mb-6">
-                  <div className="flex items-center gap-3 text-sm text-black/60">
+                  <div className="flex items-center gap-3 text-sm text-[#c4c7c8]">
                     <Phone className="size-4" />
                     <span className="font-mono">{supplier.phone}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-sm text-black/60">
+                  <div className="flex items-center gap-3 text-sm text-[#c4c7c8]">
                     <Mail className="size-4" />
                     <span className="font-mono">{supplier.email}</span>
                   </div>
                   <div className="text-sm">
-                    <p className="font-mono text-xs text-black mb-1 tracking-wider uppercase">Address:</p>
-                    <p className="text-black/60" style={{ letterSpacing: '-0.14px', fontWeight: 330 }}>{supplier.address}</p>
+                    <p className="font-mono text-xs text-white mb-1 tracking-wider uppercase">Address:</p>
+                    <p className="text-[#c4c7c8]" style={{ letterSpacing: '-0.14px', fontWeight: 330 }}>{supplier.address}</p>
                   </div>
                 </div>
 
-                <div className="border-t border-black/10 pt-4 grid grid-cols-2 gap-4">
+                <div className="border-t border-white/20 pt-4 grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs font-mono text-black/60 mb-1 tracking-[1.2px] uppercase">Products</p>
-                    <p className="text-lg font-heading text-black" style={{ fontWeight: 540 }}>{supplier.products} TYPES</p>
+                    <p className="text-xs font-mono text-[#c4c7c8] mb-1 tracking-[1.2px] uppercase">Products</p>
+                    <p className="text-lg font-heading text-white" style={{ fontWeight: 540 }}>{supplier.products} TYPES</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs font-mono text-black/60 mb-1 tracking-[1.2px] uppercase">Total Purchase</p>
-                    <p className="text-lg font-heading text-black" style={{ fontWeight: 540 }}>{formatCurrency(supplier.totalPurchase)}</p>
+                    <p className="text-xs font-mono text-[#c4c7c8] mb-1 tracking-[1.2px] uppercase">Total Purchase</p>
+                    <p className="text-lg font-heading text-white" style={{ fontWeight: 540 }}>{formatCurrency(supplier.totalPurchase)}</p>
                   </div>
                 </div>
               </div>
@@ -109,13 +109,13 @@ export function Suppliers() {
       </div>
       {!isLoading && error ? (
         <div className="figma-card p-6 mt-6">
-          <p className="figma-mono-label text-xs text-black/60 mb-2">ERROR</p>
-          <p className="text-sm text-black/70">{error}</p>
+          <p className="figma-mono-label text-xs text-[#c4c7c8] mb-2">ERROR</p>
+          <p className="text-sm text-[#dae2fd]">{error}</p>
         </div>
       ) : null}
       {!isLoading && !error && suppliers.length === 0 ? (
         <div className="figma-card p-6 mt-6">
-          <p className="figma-mono-label text-xs text-black/60">NO SUPPLIERS AVAILABLE</p>
+          <p className="figma-mono-label text-xs text-[#c4c7c8]">NO SUPPLIERS AVAILABLE</p>
         </div>
       ) : null}
     </div>

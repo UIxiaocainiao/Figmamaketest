@@ -6,3 +6,7 @@
 	path = design.md
 	url = git@github.com:UIxiaocainiao/design.md.git
 	branch = main
+[submodule "MeiGen-AI-Design-MCP"]
+	path = MeiGen-AI-Design-MCP
+	url = git@github.com:jau123/MeiGen-AI-Design-MCP.git
+	branch = main

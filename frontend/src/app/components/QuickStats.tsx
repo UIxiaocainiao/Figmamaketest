@@ -7,17 +7,22 @@ interface QuickStatsProps {
 
 export function QuickStats({ label, value, change, icon: Icon }: QuickStatsProps) {
   return (
-    <div className="figma-card p-6 animate-scale-in">
-      <div className="flex items-center justify-between mb-6">
-        <Icon className="size-6 text-black" />
-        {change && (
-          <span className="figma-mono-label text-xs text-black">{change}</span>
-        )}
+    <div className="animate-scale-in rounded-2xl border border-white/20 bg-white/[0.12] p-6 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.12)] transition-all duration-300 hover:bg-white/[0.16]">
+      <div className="mb-6 flex items-center justify-between">
+        <Icon className="size-6 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)]" />
+        {change ? (
+          <span className="figma-mono-label rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-white">
+            {change}
+          </span>
+        ) : null}
       </div>
-      <h3 className="figma-mono-label text-xs text-black/60 mb-2">
-        {label}
-      </h3>
-      <p className="text-3xl font-heading text-black" style={{ fontWeight: 540, letterSpacing: '-0.96px' }}>{value}</p>
+      <h3 className="figma-mono-label mb-2 text-xs text-[#c4c7c8]">{label}</h3>
+      <p
+        className="font-heading text-3xl text-white md:text-4xl"
+        style={{ fontWeight: 540, letterSpacing: "-0.04em", textShadow: "0px 2px 4px rgba(0, 0, 0, 0.15)" }}
+      >
+        {value}
+      </p>
     </div>
   );
 }
